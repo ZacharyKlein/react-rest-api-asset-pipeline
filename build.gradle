@@ -8,6 +8,8 @@ buildscript {
         classpath "gradle.plugin.com.energizedwork.webdriver-binaries:webdriver-binaries-gradle-plugin:1.1"
         classpath "gradle.plugin.com.energizedwork:idea-gradle-plugins:1.4"
         classpath "org.grails.plugins:hibernate5:${gormVersion-".RELEASE"}"
+        classpath "com.bertramlabs.plugins:asset-pipeline-gradle:2.14.7"
+        classpath 'com.craigburke.gradle:client-dependencies:1.4.0'
         classpath "org.grails.plugins:views-gradle:1.1.6"
     }
 }
@@ -21,6 +23,8 @@ apply plugin:"war"
 apply plugin:"org.grails.grails-web"
 apply plugin:"com.energizedwork.webdriver-binaries"
 apply plugin:"com.energizedwork.idea-project-components"
+apply plugin:"asset-pipeline"
+apply plugin: 'com.craigburke.client-dependencies'
 apply plugin:"org.grails.plugins.views-json"
 
 repositories {
@@ -55,6 +59,8 @@ dependencies {
     runtime "org.glassfish.web:el-impl:2.1.2-b03"
     runtime "com.h2database:h2"
     runtime "org.apache.tomcat:tomcat-jdbc"
+    runtime "com.bertramlabs.plugins:asset-pipeline-grails:2.14.7"
+    assets "com.bertramlabs.plugins:jsx-asset-pipeline:2.14.7"
     testCompile "org.grails:grails-gorm-testing-support"
     testCompile "org.grails:grails-datastore-rest-client"
     testCompile "org.grails:grails-web-testing-support"
@@ -80,3 +86,23 @@ tasks.withType(Test) {
     systemProperty "webdriver.chrome.driver", System.getProperty('webdriver.chrome.driver')
     systemProperty "webdriver.gecko.driver", System.getProperty('webdriver.gecko.driver')
 }
+
+assets {
+    excludes = ['**/*.js']
+    includes = ['application.jsx.es6']
+    minifyJs = false
+
+    configOptions = [
+            enableES6: true
+    ]
+}
+
+clientDependencies {
+    npm {
+        'whatwg-fetch'('2.0.3')
+        'react'('15.2.1')
+        'react-dom'('15.2.1')
+    }
+    installDir = 'grails-app/assets/vendor'
+}
+
