@@ -2,6 +2,7 @@ Thumbs.db
 .DS_Store
 .gradle
 build/
+grails-app/assets/vendor/
 out/
 .idea
 *.iml
