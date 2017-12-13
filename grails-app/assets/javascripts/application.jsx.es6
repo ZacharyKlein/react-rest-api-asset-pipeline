@@ -1,5 +1,4 @@
 //= require_self
-//= require_tree .
 
 import React from 'react';
 import ReactDOM from 'react-dom'
